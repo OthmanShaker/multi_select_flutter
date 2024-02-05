@@ -309,79 +309,89 @@ class __MultiSelectChipFieldViewState<V>
                   ? Container(
                       color:
                           widget.headerColor ?? Theme.of(context).primaryColor,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          _showSearch
-                              ? Expanded(
-                                  child: Container(
-                                    padding: EdgeInsets.only(left: 10),
-                                    child: TextField(
-                                      style: widget.searchTextStyle,
-                                      decoration: InputDecoration(
-                                        hintStyle: widget.searchHintStyle,
-                                        hintText: widget.searchHint ?? "Search",
-                                        focusedBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: widget.selectedChipColor ??
-                                                Theme.of(context).primaryColor,
+                      child: SingleChildScrollView(
+                        physics: const NeverScrollableScrollPhysics(),
+                        scrollDirection: Axis.horizontal, 
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              _showSearch
+                                  ? Expanded(
+                                      child: Container(
+                                        padding: EdgeInsets.only(left: 10),
+                                        child: TextField(
+                                          style: widget.searchTextStyle,
+                                          decoration: InputDecoration(
+                                            hintStyle: widget.searchHintStyle,
+                                            hintText:
+                                                widget.searchHint ?? "Search",
+                                            focusedBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: widget.selectedChipColor ??
+                                                    Theme.of(context)
+                                                        .primaryColor,
+                                              ),
+                                            ),
                                           ),
+                                          onChanged: (val) {
+                                            setState(() {
+                                              _items = widget.updateSearchQuery(
+                                                  val, widget.items);
+                                            });
+                                          },
                                         ),
                                       ),
-                                      onChanged: (val) {
+                                    )
+                                  : Padding(
+                                      padding: const EdgeInsets.only(left: 8.0),
+                                      child: widget.title != null
+                                          ? Text(
+                                              widget.title!.data!,
+                                              style: TextStyle(
+                                                  color: widget.title!.style !=
+                                                          null
+                                                      ? widget.title!.style!.color
+                                                      : null,
+                                                  fontSize:
+                                                      widget.title!.style != null
+                                                          ? widget.title!.style!
+                                                                  .fontSize ??
+                                                              18
+                                                          : 18),
+                                            )
+                                          : Text(
+                                              "Select",
+                                              style: TextStyle(fontSize: 18),
+                                            ),
+                                    ),
+                              widget.searchable != null && widget.searchable!
+                                  ? IconButton(
+                                      icon: _showSearch
+                                          ? widget.closeSearchIcon ??
+                                              Icon(
+                                                Icons.close,
+                                                size: 22,
+                                              )
+                                          : widget.searchIcon ??
+                                              Icon(
+                                                Icons.search,
+                                                size: 22,
+                                              ),
+                                      onPressed: () {
                                         setState(() {
-                                          _items = widget.updateSearchQuery(
-                                              val, widget.items);
+                                          _showSearch = !_showSearch;
+                                          if (!_showSearch) _items = widget.items;
                                         });
                                       },
+                                    )
+                                  : Padding(
+                                      padding: EdgeInsets.all(18),
                                     ),
-                                  ),
-                                )
-                              : Padding(
-                                  padding: const EdgeInsets.only(left: 8.0),
-                                  child: widget.title != null
-                                      ? Text(
-                                          widget.title!.data!,
-                                          style: TextStyle(
-                                              color: widget.title!.style != null
-                                                  ? widget.title!.style!.color
-                                                  : null,
-                                              fontSize:
-                                                  widget.title!.style != null
-                                                      ? widget.title!.style!
-                                                              .fontSize ??
-                                                          18
-                                                      : 18),
-                                        )
-                                      : Text(
-                                          "Select",
-                                          style: TextStyle(fontSize: 18),
-                                        ),
-                                ),
-                          widget.searchable != null && widget.searchable!
-                              ? IconButton(
-                                  icon: _showSearch
-                                      ? widget.closeSearchIcon ??
-                                          Icon(
-                                            Icons.close,
-                                            size: 22,
-                                          )
-                                      : widget.searchIcon ??
-                                          Icon(
-                                            Icons.search,
-                                            size: 22,
-                                          ),
-                                  onPressed: () {
-                                    setState(() {
-                                      _showSearch = !_showSearch;
-                                      if (!_showSearch) _items = widget.items;
-                                    });
-                                  },
-                                )
-                              : Padding(
-                                  padding: EdgeInsets.all(18),
-                                ),
-                        ],
+                            ],
+                          ),
+                        ),
                       ),
                     )
                   : Container(),
