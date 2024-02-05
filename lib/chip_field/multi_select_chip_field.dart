@@ -5,6 +5,8 @@ class MultiSelectChipField<V> extends FormField<List<V>> {
   /// Style the Container that makes up the field.
   final BoxDecoration? decoration;
 
+  final double? width;
+
   /// List of items to select from.
   final List<MultiSelectItem<V>> items;
 
@@ -86,6 +88,7 @@ class MultiSelectChipField<V> extends FormField<List<V>> {
 
   MultiSelectChipField({
     required this.items,
+    this.width,
     this.decoration,
     this.chipColor,
     this.selectedChipColor,
