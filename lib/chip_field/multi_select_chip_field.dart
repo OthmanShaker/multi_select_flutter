@@ -175,6 +175,7 @@ class _MultiSelectChipFieldView<V> extends StatefulWidget
   final String? searchHint;
   final TextStyle? searchHintStyle;
   final TextStyle? searchTextStyle;
+  final double? width;
   final List<V> initialValue;
   final Color? Function(V)? colorator;
   final Function(List<V>)? onTap;
@@ -190,6 +191,7 @@ class _MultiSelectChipFieldView<V> extends StatefulWidget
 
   _MultiSelectChipFieldView({
     required this.items,
+    this.width, 
     this.selectedItems,
     this.decoration,
     this.chipColor,
@@ -226,6 +228,7 @@ class _MultiSelectChipFieldView<V> extends StatefulWidget
         decoration = field.decoration,
         initialValue = field.initialValue,
         selectedChipColor = field.selectedChipColor,
+        width = field.width,  
         chipShape = field.chipShape,
         colorator = field.colorator,
         chipColor = field.chipColor,
@@ -313,7 +316,7 @@ class __MultiSelectChipFieldViewState<V>
                         physics: const NeverScrollableScrollPhysics(),
                         scrollDirection: Axis.horizontal, 
                         child: SizedBox(
-                          width: MediaQuery.of(context).size.width,
+                          width: widget.width ?? MediaQuery.of(context).size.width,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
