@@ -194,7 +194,7 @@ class _MultiSelectChipFieldView<V> extends StatefulWidget
 
   _MultiSelectChipFieldView({
     required this.items,
-    this.width, 
+    this.width,
     this.selectedItems,
     this.decoration,
     this.chipColor,
@@ -231,7 +231,7 @@ class _MultiSelectChipFieldView<V> extends StatefulWidget
         decoration = field.decoration,
         initialValue = field.initialValue,
         selectedChipColor = field.selectedChipColor,
-        width = field.width,  
+        width = field.width,
         chipShape = field.chipShape,
         colorator = field.colorator,
         chipColor = field.chipColor,
@@ -317,12 +317,32 @@ class __MultiSelectChipFieldViewState<V>
                           widget.headerColor ?? Theme.of(context).primaryColor,
                       child: SingleChildScrollView(
                         physics: const NeverScrollableScrollPhysics(),
-                        scrollDirection: Axis.horizontal, 
+                        scrollDirection: Axis.horizontal,
                         child: SizedBox(
-                          width: widget.width ?? MediaQuery.of(context).size.width,
+                          width:
+                              widget.width ?? MediaQuery.of(context).size.width,
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
+                              IconButton(
+                                icon: _showSearch
+                                    ? widget.closeSearchIcon ??
+                                        Icon(
+                                          Icons.close,
+                                          size: 22,
+                                        )
+                                    : widget.searchIcon ??
+                                        Icon(
+                                          Icons.search,
+                                          size: 22,
+                                        ),
+                                onPressed: () {
+                                  setState(() {
+                                    _showSearch = !_showSearch;
+                                    if (!_showSearch) _items = widget.items;
+                                  });
+                                },
+                              ),
                               _showSearch
                                   ? Expanded(
                                       child: Container(
@@ -335,9 +355,10 @@ class __MultiSelectChipFieldViewState<V>
                                                 widget.searchHint ?? "Search",
                                             focusedBorder: UnderlineInputBorder(
                                               borderSide: BorderSide(
-                                                color: widget.selectedChipColor ??
-                                                    Theme.of(context)
-                                                        .primaryColor,
+                                                color:
+                                                    widget.selectedChipColor ??
+                                                        Theme.of(context)
+                                                            .primaryColor,
                                               ),
                                             ),
                                           ),
@@ -358,10 +379,12 @@ class __MultiSelectChipFieldViewState<V>
                                               style: TextStyle(
                                                   color: widget.title!.style !=
                                                           null
-                                                      ? widget.title!.style!.color
+                                                      ? widget
+                                                          .title!.style!.color
                                                       : null,
                                                   fontSize:
-                                                      widget.title!.style != null
+                                                      widget.title!.style !=
+                                                              null
                                                           ? widget.title!.style!
                                                                   .fontSize ??
                                                               18
@@ -371,29 +394,6 @@ class __MultiSelectChipFieldViewState<V>
                                               "Select",
                                               style: TextStyle(fontSize: 18),
                                             ),
-                                    ),
-                              widget.searchable != null && widget.searchable!
-                                  ? IconButton(
-                                      icon: _showSearch
-                                          ? widget.closeSearchIcon ??
-                                              Icon(
-                                                Icons.close,
-                                                size: 22,
-                                              )
-                                          : widget.searchIcon ??
-                                              Icon(
-                                                Icons.search,
-                                                size: 22,
-                                              ),
-                                      onPressed: () {
-                                        setState(() {
-                                          _showSearch = !_showSearch;
-                                          if (!_showSearch) _items = widget.items;
-                                        });
-                                      },
-                                    )
-                                  : Padding(
-                                      padding: EdgeInsets.all(18),
                                     ),
                             ],
                           ),
@@ -444,7 +444,7 @@ class __MultiSelectChipFieldViewState<V>
                   : Container(
                       height: widget.height,
                       alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      padding: EdgeInsets.all(10),
                       child: Wrap(
                         children: widget.itemBuilder != null
                             ? _items
