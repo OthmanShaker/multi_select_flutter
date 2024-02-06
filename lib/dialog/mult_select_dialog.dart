@@ -167,7 +167,6 @@ class _MultiSelectDialogState<T> extends State<MultiSelectDialog<T>> {
                 Navigator.pop(context);
               }
             }
-
             _selectedValues = widget.onItemCheckedChange(
                 _selectedValues, item.value, checked!);
 
@@ -212,7 +211,6 @@ class _MultiSelectDialogState<T> extends State<MultiSelectDialog<T>> {
         selected: item.selected,
         onSelected: (checked) {
           item.selected = checked;
-
           setState(() {
             _selectedValues = widget.onItemCheckedChange(
                 _selectedValues, item.value, checked);
