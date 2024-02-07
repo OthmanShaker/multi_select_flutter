@@ -48,6 +48,9 @@ class MultiSelectChipDisplay<V> extends StatelessWidget {
 
   bool? disabled;
 
+  // Whether to show the checkmark on the chip
+  bool? showCheckmark = true;
+
   MultiSelectChipDisplay({
     this.items,
     this.onTap,
@@ -62,6 +65,7 @@ class MultiSelectChipDisplay<V> extends StatelessWidget {
     this.scrollBar,
     this.height,
     this.chipWidth,
+    this.showCheckmark,
   }) {
     this.disabled = false;
   }
@@ -158,6 +162,7 @@ class MultiSelectChipDisplay<V> extends StatelessWidget {
             ),
           ),
         ),
+        showCheckmark: showCheckmark ?? true,
         selected: items!.contains(item),
         selectedColor: colorator != null && colorator!(item.value) != null
             ? colorator!(item.value)
