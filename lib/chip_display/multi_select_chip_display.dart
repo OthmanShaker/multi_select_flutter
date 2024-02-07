@@ -26,6 +26,10 @@ class MultiSelectChipDisplay<V> extends StatelessWidget {
   /// A function that sets the color of selected items based on their value.
   final Color? Function(V)? colorator;
 
+  // A function that sets the IconData of selected items based on their value.
+  // It will either set the chip icon, or the checkbox icon depending on the list type.
+  final IconData Function(V)? iconator;
+
   /// An icon to display prior to the chip's label.
   final Icon? icon;
 
@@ -59,6 +63,7 @@ class MultiSelectChipDisplay<V> extends StatelessWidget {
     this.decoration,
     this.textStyle,
     this.colorator,
+    this.iconator,
     this.icon,
     this.shape,
     this.scroll = false,
@@ -79,6 +84,7 @@ class MultiSelectChipDisplay<V> extends StatelessWidget {
     this.decoration,
     this.textStyle,
     this.colorator,
+    this.iconator,
     this.icon,
     this.shape,
     this.scroll = false,
@@ -137,7 +143,9 @@ class MultiSelectChipDisplay<V> extends StatelessWidget {
         shape: shape as OutlinedBorder?,
         avatar: icon != null
             ? Icon(
-                icon!.icon,
+                iconator != null
+                    ? iconator!(item.value)
+                    : icon!.icon,
                 color: colorator != null && colorator!(item.value) != null
                     ? colorator!(item.value)!.withOpacity(1)
                     : icon!.color ?? Theme.of(context).primaryColor,

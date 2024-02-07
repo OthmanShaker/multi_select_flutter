@@ -73,6 +73,10 @@ class MultiSelectBottomSheetField<V> extends FormField<List<V>> {
   /// It will either set the chip color, or the checkbox color depending on the list type.
   final Color Function(V)? colorator;
 
+  // A function that sets the IconData of selected items based on their value.
+  // It will either set the chip icon, or the checkbox icon depending on the list type.
+  final IconData Function(V)? iconator;
+
   /// Set the background color of the bottom sheet.
   final Color? backgroundColor;
 
@@ -134,6 +138,7 @@ class MultiSelectBottomSheetField<V> extends FormField<List<V>> {
     this.barrierColor,
     this.searchHint,
     this.colorator,
+    this.iconator,
     this.backgroundColor,
     this.unselectedColor,
     this.searchIcon,
@@ -162,6 +167,7 @@ class MultiSelectBottomSheetField<V> extends FormField<List<V>> {
                 decoration: decoration,
                 unselectedColor: unselectedColor,
                 colorator: colorator,
+                iconator: iconator,
                 itemsTextStyle: itemsTextStyle,
                 selectedItemsTextStyle: selectedItemsTextStyle,
                 backgroundColor: backgroundColor,
@@ -219,6 +225,7 @@ class _MultiSelectBottomSheetFieldView<V> extends StatefulWidget {
   final Color? barrierColor;
   final MultiSelectChipDisplay<V>? chipDisplay;
   final Color Function(V)? colorator;
+  final IconData Function(V)? iconator;
   final Color? backgroundColor;
   final Color? unselectedColor;
   final Icon? searchIcon;
@@ -254,6 +261,7 @@ class _MultiSelectBottomSheetFieldView<V> extends StatefulWidget {
     this.barrierColor,
     this.searchHint,
     this.colorator,
+    this.iconator,
     this.backgroundColor,
     this.unselectedColor,
     this.searchIcon,
@@ -291,6 +299,7 @@ class _MultiSelectBottomSheetFieldView<V> extends StatefulWidget {
         barrierColor = field.barrierColor,
         searchHint = field.searchHint,
         colorator = field.colorator,
+        iconator = field.iconator,
         backgroundColor = field.backgroundColor,
         unselectedColor = field.unselectedColor,
         searchIcon = field.searchIcon,
@@ -348,6 +357,7 @@ class __MultiSelectBottomSheetFieldViewState<V>
         return MultiSelectChipDisplay<V>(
           items: chipDisplayItems,
           colorator: widget.chipDisplay!.colorator ?? widget.colorator,
+          iconator: widget.chipDisplay!.iconator ?? widget.iconator,
           onTap: (item) {
             List<V>? newValues;
             if (widget.chipDisplay!.onTap != null) {
@@ -382,6 +392,7 @@ class __MultiSelectBottomSheetFieldViewState<V>
       return MultiSelectChipDisplay<V>(
         items: chipDisplayItems,
         colorator: widget.colorator,
+        iconator: widget.iconator,
         chipColor: (widget.selectedColor != null &&
                 widget.selectedColor != Colors.transparent)
             ? widget.selectedColor!.withOpacity(0.35)
@@ -412,6 +423,7 @@ class __MultiSelectBottomSheetFieldViewState<V>
             closeSearchIcon: widget.closeSearchIcon,
             unselectedColor: widget.unselectedColor,
             colorator: widget.colorator,
+            iconator: widget.iconator,
             searchHint: widget.searchHint,
             selectedColor: widget.selectedColor,
             listType: widget.listType,
@@ -435,7 +447,7 @@ class __MultiSelectBottomSheetFieldViewState<V>
             maxChildSize: widget.maxChildSize,
           );
         });
-        if (myVar != null) _selectedItems = myVar;
+    if (myVar != null) _selectedItems = myVar;
   }
 
   @override

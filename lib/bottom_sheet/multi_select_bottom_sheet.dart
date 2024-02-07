@@ -52,6 +52,10 @@ class MultiSelectBottomSheet<T> extends StatefulWidget
   /// It will either set the chip color, or the checkbox color depending on the list type.
   final Color? Function(T)? colorator;
 
+  // A function that sets the IconData of selected items based on their value.
+  // It will either set the chip icon, or the checkbox icon depending on the list type.
+  final IconData Function(T)? iconator;
+
   /// Color of the chip body or checkbox border while not selected.
   final Color? unselectedColor;
 
@@ -94,6 +98,7 @@ class MultiSelectBottomSheet<T> extends StatefulWidget
     this.minChildSize,
     this.maxChildSize,
     this.colorator,
+    this.iconator,
     this.unselectedColor,
     this.searchIcon,
     this.closeSearchIcon,
@@ -188,6 +193,15 @@ class _MultiSelectBottomSheetState<T> extends State<MultiSelectBottomSheet<T>> {
                 : widget.selectedColor != null
                     ? widget.selectedColor
                     : Theme.of(context).primaryColor.withOpacity(0.35),
+        // iconator
+        avatar: widget.iconator != null
+            ? Icon(
+                widget.iconator!(item.value),
+                color: widget.colorator != null
+                    ? widget.colorator!(item.value)
+                    : widget.selectedColor,
+              )
+            : null,
         label: Text(
           item.label,
           style: _selectedValues.contains(item.value)
