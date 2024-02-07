@@ -49,7 +49,7 @@ class MultiSelectChipDisplay<V> extends StatelessWidget {
   bool? disabled;
 
   // Whether to show the checkmark on the chip
-  bool? showCheckmark = true;
+  bool? showCheckmark;
 
   MultiSelectChipDisplay({
     this.items,
